@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Àlbum 468</title>
 
+  <title>Àlbum de Cromos (468)</title>
+
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2c3e50">
 
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header>
@@ -28,30 +36,56 @@
     <button data-filter="duplicates">Duplicats</button>
   </div>
 </header>
+
 <section id="tools">
   <button id="exportBtn">⬇ Exportar</button>
   <button id="importBtn">⬆ Importar</button>
-  <input type="file" id="importFile" hidden accept=".json">
 
+  <input type="file" id="importFile" hidden accept=".json">
   <input type="file" id="photoInput" hidden accept="image/*">
 </section>
+
 <main>
   <div id="grid"></div>
 </main>
 
 <footer>
   <button id="prevPage">◀</button>
-  <span id="pageInfo"></span>
+  <span id="pageInfo">Pàgina 1</span>
   <button id="nextPage">▶</button>
 </footer>
 
 <button id="installBtn" hidden>📲 Instal·lar l’app</button>
 
+<!-- JS -->
 <script src="script.js"></script>
+
+<!-- Service Worker -->
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
   }
 </script>
+
+<!-- Instal·lació automàtica -->
+<script>
+  let deferredPrompt;
+  const installBtn = document.getElementById("installBtn");
+
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.hidden = false;
+  });
+
+  installBtn.addEventListener("click", async () => {
+    installBtn.hidden = true;
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+</script>
+
 </body>
 </html>
