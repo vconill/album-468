@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Àlbum 468</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2c3e50">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Àlbum de Cromos</h1>
+
+  <div id="counters">
+    <span id="ownedCount">Tinc: 0</span>
+    <span id="missingCount">Falten: 468</span>
+    <span id="dupCount">Duplicats: 0</span>
+  </div>
+
+  <div id="filters">
+    <button data-filter="all">Tots</button>
+    <button data-filter="owned">Tinc</button>
+    <button data-filter="missing">Falten</button>
+    <button data-filter="duplicates">Duplicats</button>
+  </div>
+</header>
+
+<main>
+  <div id="grid"></div>
+</main>
+
+<footer>
+  <button id="prevPage">◀</button>
+  <span id="pageInfo"></span>
+  <button id="nextPage">▶</button>
+</footer>
+
+<button id="installBtn" hidden>📲 Instal·lar l’app</button>
+
+<script src="script.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
+</body>
+</html>
